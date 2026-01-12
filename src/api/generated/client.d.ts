@@ -94,6 +94,7 @@ declare namespace Components {
        */
       tax: string | null;
       invoice_lines: InvoiceLine[];
+      customer?: Components.Schemas.Customer;
     }
     export interface InvoiceCreatePayload {
       /**
