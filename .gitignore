@@ -40,3 +40,5 @@ android/
 ios/
 
 .tamagui
+
+.env

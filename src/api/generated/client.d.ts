@@ -48,6 +48,7 @@ declare namespace Components {
        * FR
        */
       country_code: string;
+      email?: string;
     }
     export interface Error {
       message: string;
