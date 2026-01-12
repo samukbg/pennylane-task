@@ -1,33 +1,43 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { useApi } from '../api';
-import { useEffect, useState } from 'react';
-import { NavigationParams } from '../types';
-import { Button, H1, Text, YStack } from '../ui';
+import { useState } from 'react';
+import { FlatList } from 'react-native';
+import { Button, YStack, Text, Input } from '../ui';
+import { useNavigation } from '@react-navigation/native';
+import { useInvoices } from '../api/hooks';
+import InvoiceListItem from '../components/InvoiceListItem';
+import EmptyState from '../components/EmptyState';
 
-export const HomeScreen = () => {
-  const api = useApi();
-  const { navigate } = useNavigation<NavigationProp<NavigationParams>>();
-  const [count, setCount] = useState(0);
+export default function Home() {
+  const navigation = useNavigation();
+  const [search, setSearch] = useState('');
+  const { data, isLoading, refetch } = useInvoices({ page: 1, per_page: 50 });
 
-  useEffect(() => {
-    api
-      .getInvoices({
-        page: 1,
-        per_page: 50,
-        filter: JSON.stringify([]),
-      })
-      .then((res) => {
-        setCount(res.data.pagination.total_entries);
-      });
-  }, []);
+  const invoices = data?.invoices || [];
 
   return (
-    <YStack gap="$4" style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-      <H1 size="$5" fontWeight="600" color="black">
-        Pennylane Invoice Editor
-      </H1>
-      <Text color="black">We currently have {count} invoices.</Text>
-      <Button onPress={() => navigate('Editor')}>Create a new one</Button>
+    <YStack flex={1}>
+      <Input 
+        placeholder="Search invoices..." 
+        value={search}
+        onChangeText={(e) => setSearch(e.nativeEvent.text)}
+      />
+      
+      {isLoading ? (
+        <Text>Loading...</Text>
+      ) : invoices.length === 0 ? (
+        <EmptyState message="No invoices found" />
+      ) : (
+        <FlatList
+          data={invoices}
+          renderItem={({ item }) => <InvoiceListItem invoice={item} />}
+          keyExtractor={(item) => item.id.toString()}
+          refreshing={isLoading}
+          onRefresh={refetch}
+        />
+      )}
+      
+      <Button onPress={() => navigation.navigate('Editor')}>
+        Create a new one
+      </Button>
     </YStack>
   );
-};
+}
