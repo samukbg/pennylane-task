@@ -5,12 +5,13 @@ import { HomeScreen } from './screens/Home';
 import { EditorScreen } from './screens/Editor';
 import { ApiProvider } from './api';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { API_KEY } from '@env';
 
 /**
  * API token to authenticate requests
  * provided by email.
  */
-const API_TOKEN = '';
+const API_TOKEN = API_KEY;
 
 const queryClient = new QueryClient();
 const Stack = createStackNavigator();

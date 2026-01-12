@@ -4,13 +4,23 @@ module.exports = function (api) {
     presets: ['babel-preset-expo'],
     plugins: [
       [
+        'module:react-native-dotenv', {
+          moduleName: '@env',
+          path: '.env',
+        },
         '@tamagui/babel-plugin',
         {
           components: ['tamagui'],
           config: './src/ui/tamagui.config.ts',
           logTimings: true,
           disableExtraction: process.env.NODE_ENV === 'development',
-        },
+        }
+      ],
+      [
+        'module:react-native-dotenv', {
+          moduleName: '@env',
+          path: '.env',
+        }
       ],
     ],
   };
