@@ -18,7 +18,7 @@ export default function Editor() {
 
   const handleCreateInvoice = (finalized: boolean) => {
     if (!customerId) {
-      alert('Please select a customer');
+      alert('Select a customer');
       return;
     }
 

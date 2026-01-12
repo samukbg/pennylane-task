@@ -1,8 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { UIProvider } from './ui/config';
-import { HomeScreen } from './screens/Home';
-import { EditorScreen } from './screens/Editor';
+import HomeScreen from './screens/Home';
+import EditorScreen from './screens/Editor';
 import InvoiceDetailScreen from './screens/InvoiceDetail'; 
 import InvoiceEditScreen from './screens/InvoiceEdit'; 
 import { ApiProvider } from './api';
